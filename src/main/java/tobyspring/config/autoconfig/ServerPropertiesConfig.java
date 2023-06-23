@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import tobyspring.config.MyAutoConfiguration;
 
+@Deprecated
 @MyAutoConfiguration
 public class ServerPropertiesConfig {
 

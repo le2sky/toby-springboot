@@ -12,8 +12,8 @@ public class WebServerConfiguration {
     @Bean
     ServletWebServerFactory customerWebServerFactory(Environment env) {
         TomcatServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
-        serverFactory.setPort(9090);
-        serverFactory.setContextPath(env.getProperty("contextPath"));
+        serverFactory.setPort(Integer.parseInt(env.getProperty("server.port")));
+        serverFactory.setContextPath(env.getProperty("server.contextPath"));
         return serverFactory;
     }
 }
