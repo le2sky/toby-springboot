@@ -1,6 +1,7 @@
 package tobyspring.helloboot;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -25,7 +26,8 @@ public class HelloServiceTest {
 
     @FastUnitTest
     void simpleHelloService() {
-        SimpleHelloService simpleHelloService = new SimpleHelloService();
+        HelloRepository repository = Mockito.mock(HelloRepository.class);
+        SimpleHelloService simpleHelloService = new SimpleHelloService(repository);
 
         String ret = simpleHelloService.sayHello("Test");
 
@@ -34,7 +36,17 @@ public class HelloServiceTest {
 
     @Test
     void helloDecorator() {
-        HelloDecorator helloDecorator = new HelloDecorator(name -> name);
+        HelloDecorator helloDecorator = new HelloDecorator(new HelloService() {
+            @Override
+            public String sayHello(String name) {
+                return name;
+            }
+
+            @Override
+            public int countOf(String name) {
+                return 0;
+            }
+        });
 
         String ret = helloDecorator.sayHello("Test");
 

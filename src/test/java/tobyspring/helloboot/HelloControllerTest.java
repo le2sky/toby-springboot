@@ -7,9 +7,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class HelloControllerTest {
 
+    private HelloService getHelloService() {
+        return new HelloService() {
+            @Override
+            public String sayHello(String name) {
+                return name;
+            }
+
+            @Override
+            public int countOf(String name) {
+                return 0;
+            }
+        };
+    }
+
     @Test
     void helloController() {
-        HelloController controller = new HelloController(name -> name);
+        HelloController controller = new HelloController(getHelloService());
 
         String ret = controller.hello("Test");
 
@@ -18,7 +32,7 @@ public class HelloControllerTest {
 
     @Test
     void failsHelloController() {
-        HelloController controller = new HelloController(name -> name);
+        HelloController controller = new HelloController(getHelloService());
 
         assertThatThrownBy(() -> {
             controller.hello(null);
